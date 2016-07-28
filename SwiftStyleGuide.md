@@ -1,7 +1,8 @@
 #[WIP] Swift Style Guide
 
 # Style
-基本的には可読性のための規約
+基本的には可読性のための規約.
+Must, Should
 
 ## プロパティ
 ### 変更可能性が無いプロパティはlet宣言する
@@ -243,5 +244,23 @@ enum King {
 //Bad
 enum Kind {
   case animal, plant
+}
+```
+
+## Protocol
+### Extensionを利用する
+```swift
+//Good
+class ViewController: UIViewController {
+  ...
+}
+
+extension ViewController: UITableViewDataSource {
+  ...
+}
+
+//Bad
+class ViewController: UIViewController, UITableViewDataSource {
+  ...
 }
 ```
