@@ -18,6 +18,20 @@ let message: String
 let text: String, message: String
 ```
 
+### Arrayの定義・初期化
+```swift
+//Good
+var messages = [String]()
+var messages = ["text", "message"]
+var messages: [String]? = nil
+
+//Bad
+var messages = Array<String>()
+var messages = Array<String>(arrayLiteral: "text", "message")
+var messages: Array<String>? = nil
+
+```
+
 ### セミコロンはつけない
 ```swift
 //Good
