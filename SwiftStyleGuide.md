@@ -75,6 +75,7 @@ private func countUp(){
 //Good
 let text = "text"
 let kind = Kind.Animal
+let kind: Kind = .Animal
 kind = .Plant
 
 //Bad
@@ -110,6 +111,18 @@ override func viewDidLoad() {
     self.model = Model()
 }
 
+```
+### Computed valueのは省略できるものは省略する
+```swift
+//Good
+var number: Int { return 40 }//getだけの場合は省略できる
+
+//Bad
+var number: Int {
+  get {
+    return 40
+  }
+}
 ```
 
 ## オプショナル
