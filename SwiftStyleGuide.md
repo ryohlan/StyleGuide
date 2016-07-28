@@ -5,6 +5,16 @@
 ### 変更可能性が無いプロパティはlet宣言する
 Xcodeだとlintが警告を出します
 
+### 1行に2つ以上の宣言をしない
+```swift
+//Good
+let text: String
+let message: String
+
+//Bad
+let text: String, message: String
+```
+
 ### セミコロンはつけない
 ```swift
 //Good
@@ -72,8 +82,38 @@ kind = Kind.plant
 
 
 ## オプショナル
-###
+### Implicitly Unwrapped Optional型は必ず初期化がされる場合にのみ使用可
+極力避ける
 
+### Fource Unwrappは使わずOptional Bindingを使う
+```swift
+//Good
+let text: String? = nil
+...
+
+if let text = text {
+  ...
+}
+
+guard let text = text else { return }
+
+let text = text ?? ""
+
+//Bad
+let text = text!
+```
+
+### if let より gurad を用いて早期リターンを使う
+```swift
+//Good
+guard let text = text else { return }
+setText(text)
+
+//Bad
+if let text = text {
+  setText(text)
+}
+```
 
 ## メソッド
 ### メソッドは下に空行を1行入れる
@@ -142,9 +182,23 @@ button.rx_tap.subscribeNext { _ in print("tap") }
 button.rx_tap.subscribeNext { button in print("tap") }
 ```
 
-### @noescape以外のクロージャ無いのself参照は循環参照を避けるため[weak self]を宣言する
+### @noescape以外のクロージャ無いのself参照は循環参照を避けるため[weak self]を宣言し、`self`にguard文でBindする。ただし処理が1行で済む場合はself?を参照してもよい
 ```swift
+//Good
+button.rx_tap.subscribeNext { [weak self] _ in guard let `self` = self else { return }
+  ...
+  ...
+  ...
+}
+button.rx_tap.subscribeNext { [weak self] _ in self?.text = "tap" }
 
+//Bad
+button.rx_tap.subscribeNext { _ in self.text = "tap" }
+button.rx_tap.subscribeNext { [weak self] in
+  if let `self` = self {
+    ...
+  }
+ }
 ```
 
 ## Naming
@@ -174,4 +228,18 @@ let errorMessage = errorResponse.message
 
 //Bad
 let em = errorResponse.message
+```
+
+## Enum
+### パスカルケースで記述
+```swift
+//Good
+enum King {
+  case Animal, Plant
+}
+
+//Bad
+enum Kind {
+  case animal, plant
+}
 ```
