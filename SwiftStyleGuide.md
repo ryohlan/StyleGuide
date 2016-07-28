@@ -106,6 +106,17 @@ let text = text ?? ""
 let text = text!
 ```
 
+### バインド先はバインド元と同じ名前にする
+```swift
+let message: String = nil
+
+//Good
+guard let message = message else { return }
+
+//Bad
+guard let msg = message else { return }
+```
+
 ### if let より gurad を用いて早期リターンを使う
 ```swift
 //Good
@@ -185,7 +196,7 @@ button.rx_tap.subscribeNext { _ in print("tap") }
 button.rx_tap.subscribeNext { button in print("tap") }
 ```
 
-### @noescape以外のクロージャ無いのself参照は循環参照を避けるため[weak self]を宣言し、`self`にguard文でBindする。ただし処理が1行で済む場合はself?を参照してもよい
+### @noescape以外のクロージャ無いのself参照は循環参照を避けるため[weak self]を宣言し、`self`にguard文でバインドする。ただし処理が1行で済む場合はself?を参照してもよい
 ```swift
 //Good
 button.rx_tap.subscribeNext { [weak self] _ in guard let `self` = self else { return }
