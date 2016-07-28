@@ -6,7 +6,7 @@ Must, Should
 
 ## プロパティ
 ### 変更可能性が無いプロパティはlet宣言する
-Xcodeだとlintが警告を出します
+Xcodeだとlintが警告を出る
 
 ### 1行に2つ以上の宣言をしない
 ```swift
@@ -16,20 +16,6 @@ let message: String
 
 //Bad
 let text: String, message: String
-```
-
-### Arrayの定義・初期化
-```swift
-//Good
-var messages = [String]()
-var messages = ["text", "message"]
-var messages: [String]? = nil
-
-//Bad
-var messages = Array<String>()
-var messages = Array<String>(arrayLiteral: "text", "message")
-var messages: Array<String>? = nil
-
 ```
 
 ### セミコロンはつけない
@@ -96,7 +82,35 @@ let text: String = "text"
 let kind: Kind = Kind.Animal
 kind = Kind.plant
 ```
+### Arrayの定義・初期化
+```swift
+//Good
+var messages = [String]()
+var messages = ["text", "message"]
+var messages: [String]? = nil
 
+//Bad
+var messages = Array<String>()
+var messages = Array<String>(arrayLiteral: "text", "message")
+var messages: Array<String>? = nil
+```
+
+### インスタンスプロパティに内部からアクセスする際にSelfは付けない
+これは賛否ある
+```swift
+//Good
+override func viewDidLoad() {
+    super.viewDidLoad()
+    model = Model()
+}
+
+//Bad
+override func viewDidLoad() {
+    super.viewDidLoad()
+    self.model = Model()
+}
+
+```
 
 ## オプショナル
 ### Implicitly Unwrapped Optional型は必ず初期化がされる場合にのみ使用可
