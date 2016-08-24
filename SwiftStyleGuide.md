@@ -316,3 +316,15 @@ class ViewController: UIViewController, UITableViewDataSource {
   ...
 }
 ```
+
+## Tuple
+### 名前を付ける
+```swift
+//Good
+let tpl = (name: "namae", size: 32)
+typealias tpl = (name: String, size: Int)
+
+//Bad
+let tpl = ("name", 32)
+typealias tpl = (String, Int)
+```
